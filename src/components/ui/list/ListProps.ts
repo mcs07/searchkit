@@ -1,9 +1,9 @@
 
 export interface ListProps {
-  toggleItem: (key:string)=>void
-  setItems: (keys:Array<string>)=>void
-  items: Array<any>
-  selectedItems: Array<string>
+  toggleItem?: (key:string)=>void
+  setItems?: (keys:Array<string>)=>void
+  items?: Array<any>
+  selectedItems?: Array<string>
   docCount?: number // number of documents for this list
   disabled?: boolean
   mod?: string

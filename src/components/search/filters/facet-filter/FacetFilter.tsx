@@ -89,7 +89,7 @@ export class FacetFilter<T extends FacetFilterProps> extends SearchkitComponent<
   }
 
   render() {
-    const { listComponent, containerComponent, showCount, title, id } = this.props
+    const { listComponent, itemComponent, containerComponent, showCount, title, id } = this.props
     return renderComponent(containerComponent, {
       title,
       className: id ? `filter--${id}` : undefined,
@@ -98,7 +98,7 @@ export class FacetFilter<T extends FacetFilterProps> extends SearchkitComponent<
       renderComponent(listComponent, {
         key:"listComponent",
         items: this.getItems(),
-        itemComponent:this.props.itemComponent,
+        itemComponent,
         selectedItems: this.getSelectedItems(),
         toggleItem: this.toggleFilter.bind(this),
         setItems: this.setFilters.bind(this),

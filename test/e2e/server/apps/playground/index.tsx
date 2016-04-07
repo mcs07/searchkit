@@ -25,7 +25,7 @@ const map = require("lodash/map")
 const isUndefined = require("lodash/isUndefined")
 
 import { TogglePanel } from './components/TogglePanel'
-// import { TogglePanel } from './components/TogglePanel'
+import { GridList } from './components/GridList'
 
 require("../../../../../theming/theme.scss")
 require("./customisations.scss")
@@ -213,6 +213,7 @@ class App extends React.Component<any, any> {
                   TermQuery("type.raw", "Movie")
                 ])} />
 
+              <RefinementListFilter id="countries" title="Countries" field="countries.raw" operator="OR" size={10} listComponent={<GridList columnCount={3}/>}/>
               <InputFilter id="author_q" title="Actors filter" placeholder="Search actors" searchOnChange={false} blurAction="search" queryFields={["actors"]}/>
               <InputFilter id="writer_q" title="Writers filter" placeholder="Search writers" searchOnChange={false} blurAction="restore" queryFields={["writers"]}/>
               <MenuFilter field={"type.raw"} size={10} title="Movie Type" id="types" listComponent={listComponents[this.state.viewMode]}
@@ -238,7 +239,6 @@ class App extends React.Component<any, any> {
               <TagFilterConfig id="genres" title="Genres" field="genres.raw" />
               <RefinementListFilter id="actors" title="Actors" field="actors.raw" size={10}/>
               <RefinementListFilter translations={{"facets.view_more":"View more writers"}} id="writers" title="Writers" field="writers.raw" operator="OR" size={10}/>
-              <RefinementListFilter id="countries" title="Countries" field="countries.raw" operator="OR" size={10}/>
               <NumericRefinementListFilter listComponent={Select} id="runtimeMinutes" title="Length" field="runtimeMinutes" options={[
                 {title:"All"},
                 {title:"up to 20", from:0, to:20},

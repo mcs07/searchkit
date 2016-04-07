@@ -1,0 +1,43 @@
+@import "filter-item.scss";
+@import "../vars.scss";
+
+.sk-grid-list {
+  display: flex;
+  flex-flow: row wrap;
+  box-sizing: border-box;
+
+  &.is-disabled  {
+    display:none;
+  }
+
+  &-option {
+    @include filter-option;
+    
+    text-align: center;
+    flex: 0 0 auto;
+    width: calc(33% - 2px);
+    display: block;
+    border-radius: 3px;
+    padding: 1px;
+    margin: 1px;
+    
+    &.grid-1 { width: calc(100% - 2px); }
+    &.grid-2 { width: calc(50% - 2px); }
+    &.grid-3 { width: calc(33.33% - 2px); }
+    &.grid-4 { width: calc(25% - 2px); }
+    &.grid-5 { width: calc(20% - 2px); }
+    &.grid-6 { width: calc(16.66% - 2px); }
+    
+    &__count {
+      text-align: center;
+    }
+    
+    &.is-active {
+      background-color: #aaa;
+    }
+    &.is-active &__text{
+      color: #fff;
+      font-weight: $sk-light-weight;
+    }
+  }
+}

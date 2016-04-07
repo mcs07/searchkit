@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { ListProps, ItemProps } from "searchkit"
+import { ListProps, ItemProps, FastClick } from "searchkit"
 
 const block = require('bem-cn')
 
@@ -10,29 +10,46 @@ const defaults = require("lodash/defaults")
 const identity = require("lodash/identity")
 
 
-export interface ItemComponentProps extends ItemProps {
-  showCheckbox: boolean
+export interface GridListItemProps extends ItemProps {
+  columnCount: number
 }
 
-export class GridListItem extends React.Component<ItemComponentProps, {}> {
+export class GridListItem extends React.Component<GridListItemProps, {}> {
   render(){
-    
+    const {bemBlocks, onClick, active, label, count, showCount, columnCount} = this.props;
+    const block = bemBlocks.option;
+    const className = block()
+                      .state({active})
+                      .mix("grid-" + columnCount)
+                      .mix(bemBlocks.container("item"));
+    return (
+      <FastClick handler={onClick}>
+        <div className={className} data-qa="option">
+          <div data-qa="label" className={block("text")}>{label}</div>
+          {showCount ? <div data-qa="count" className={block("count")}>{count}</div> : undefined}
+        </div>
+      </FastClick>
+    )
   }
 }
 
 export interface GridListProps extends ListProps {
   labelComponent?: any
   itemComponent?: any
+  columnCount?: number
 }
 
 export class GridList extends React.Component<GridListProps, {}> {
-  static defaultProps: any = {
+  
+  static defaultProps:any = {
+    items: [],
+    selectItems: [],
     mod: "sk-grid-list",
     showCount: true,
-    itemComponent: CheckboxItemComponent,
+    itemComponent: GridListItem,
     translate:identity,
     multiselect: true,
-    selectItems: [],
+    columnCount: 3,
   }
 
   isActive(option){
@@ -48,9 +65,10 @@ export class GridList extends React.Component<GridListProps, {}> {
   render() {
     const {
       mod, itemComponent, items, selectedItems = [], translate,
-      toggleItem, setItems, multiselect,
+      toggleItem, setItems, multiselect, columnCount,
       disabled, showCount, className, docCount
     } = this.props
+    console.log('itemComponent', itemComponent);
 
     const bemBlocks = {
       container: block(mod),
@@ -70,7 +88,7 @@ export class GridList extends React.Component<GridListProps, {}> {
         count: option.doc_count,
         listDocCount: docCount,
         disabled:option.disabled,
-        showCount,
+        columnCount, showCount,
         active: this.isActive(option)
       })
     })
@@ -82,31 +100,4 @@ export class GridList extends React.Component<GridListProps, {}> {
   }
 }
 
-export class ItemList extends AbstractItemList {
-    static defaultProps = defaults({
-      itemComponent: ItemComponent
-    }, AbstractItemList.defaultProps)
-}
-
-export class CheckboxItemList extends AbstractItemList {
-    static defaultProps = defaults({
-        itemComponent: CheckboxItemComponent
-    }, AbstractItemList.defaultProps)
-}
-
-export class Toggle extends AbstractItemList {
-    static defaultProps = defaults({
-        itemComponent: ItemComponent,
-        mod: 'sk-toggle',
-        showCount: false,
-    }, AbstractItemList.defaultProps)
-}
-
-export class Tabs extends AbstractItemList {
-    static defaultProps = defaults({
-        itemComponent: ItemComponent,
-        mod: 'sk-tabs',
-        showCount: false,
-        multiselect: false,
-    }, AbstractItemList.defaultProps)
-}
+console.log("GridList", GridList.defaultProps)
