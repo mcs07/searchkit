@@ -24,7 +24,8 @@ const _ = require("lodash")
 const map = require("lodash/map")
 const isUndefined = require("lodash/isUndefined")
 
-import { TogglePanel } from './TogglePanel'
+import { TogglePanel } from './components/TogglePanel'
+// import { TogglePanel } from './components/TogglePanel'
 
 require("../../../../../theming/theme.scss")
 require("./customisations.scss")
@@ -197,7 +198,7 @@ class App extends React.Component<any, any> {
         <Layout>
 
           <TopBar>
-            <SearchBox autofocus={true} searchOnChange={true} prefixQueryFields={["actors^1","type^2","languages","title^10"]}/>
+            <SearchBox autofocus={true} searchOnChange={false} prefixQueryFields={["actors^1","type^2","languages","title^10"]}/>
           </TopBar>
 
           <LayoutBody>
@@ -206,8 +207,6 @@ class App extends React.Component<any, any> {
               <Panel title="Selected Filters" collapsable={true} defaultCollapsed={false}>
                 <SelectedFilters/>
               </Panel>
-              <CheckboxFilter id="rated-r" title="Rating" label="Rated R" filter={TermQuery("rated.raw", 'R')} />
-              <CheckboxFilter id="recent" title="Date" label="Recent" filter={RangeQuery("year", {gt: 2012})} />
               <CheckboxFilter id="old-movies" title="Movile filter" label="Old movies" filter={
                 BoolMust([
                   RangeQuery("year", {lt: 1970}),
